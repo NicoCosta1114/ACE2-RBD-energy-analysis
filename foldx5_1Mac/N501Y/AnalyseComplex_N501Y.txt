@@ -1,0 +1,515 @@
+==== 6m0j_foldx_Repair_1_0.pdb ====
+   ********************************************
+   ***                                      ***
+   ***             FoldX 5.1 (c)            ***
+   ***                                      ***
+   ***     code by the FoldX Consortium     ***
+   ***                                      ***
+   ***     Jesper Borg, Frederic Rousseau   ***
+   ***    Joost Schymkowitz, Luis Serrano   ***
+   ***    Peter Vanhee, Erik Verschueren    ***
+   ***     Lies Baeten, Javier Delgado      ***
+   ***       and Francois Stricher          ***
+   *** and any other of the 9! permutations ***
+   ***   based on an original concept by    ***
+   ***   Raphael Guerois and Luis Serrano   ***
+   ********************************************
+
+Start FoldX AnalyseComplex >>>
+
+1 models read: 6m0j_foldx_Repair_1_0.pdb
+RUNNING COMPLEX ANALYSIS
+./6m0j_foldx_Repair_1_0.pdb
+
+BackHbond       =               -551.74
+SideHbond       =               -290.96
+Energy_VdW      =               -883.37
+Electro         =               -43.12
+Energy_SolvP    =               1157.33
+Energy_SolvH    =               -1167.45
+Energy_vdwclash =               26.64
+energy_torsion  =               28.01
+backbone_vdwclash=              572.20
+Entropy_sidec   =               482.58
+Entropy_mainc   =               1099.74
+water bonds     =               0.00
+helix dipole    =               -4.58
+loop_entropy    =               0.00
+cis_bond        =               1.12
+disulfide       =               0.00
+kn electrostatic=               -0.26
+partial covalent interactions = 0.00
+Energy_Ionisation =             0.00
+Entropy Complex =               0.00
+-----------------------------------------------------------
+Total          = 				  -146.06
+
+Group 0 is composed of chains : A(0)
+Group 1 is composed of chains : E(1)
+Total 
+
+BackHbond       =               -551.74
+SideHbond       =               -290.96
+Energy_VdW      =               -883.37
+Electro         =               -43.12
+Energy_SolvP    =               1157.33
+Energy_SolvH    =               -1167.45
+Energy_vdwclash =               26.64
+energy_torsion  =               28.01
+backbone_vdwclash=              572.20
+Entropy_sidec   =               482.58
+Entropy_mainc   =               1099.74
+water bonds     =               0.00
+helix dipole    =               -4.58
+loop_entropy    =               0.00
+cis_bond        =               1.12
+disulfide       =               0.00
+kn electrostatic=               -0.26
+partial covalent interactions = 0.00
+Energy_Ionisation =             0.00
+Entropy Complex =               0.00
+-----------------------------------------------------------
+Total          = 				  -146.06
+
+interaction between A and E
+
+BackHbond       =               -2.38
+SideHbond       =               -12.55
+Energy_VdW      =               -15.05
+Electro         =               -2.32
+Energy_SolvP    =               20.56
+Energy_SolvH    =               -18.61
+Energy_vdwclash =               5.83
+energy_torsion  =               0.21
+backbone_vdwclash=              1.81
+Entropy_sidec   =               9.95
+Entropy_mainc   =               1.90
+water bonds     =               0.00
+helix dipole    =               -0.04
+loop_entropy    =               0.00
+cis_bond        =               0.00
+disulfide       =               0.00
+kn electrostatic=               -0.26
+partial covalent interactions = 0.00
+Energy_Ionisation =             0.00
+Entropy Complex =               2.38
+-----------------------------------------------------------
+Total          = 				  -12.77
+
+Complex Analysis of ./6m0j_foldx_Repair_1_0.pdb went fine
+
+Your file run OK
+End time of FoldX: Sat Dec 27 20:47:13 2025
+Total time spend: 0.68 seconds.
+==== 6m0j_foldx_Repair_1_1.pdb ====
+   ********************************************
+   ***                                      ***
+   ***             FoldX 5.1 (c)            ***
+   ***                                      ***
+   ***     code by the FoldX Consortium     ***
+   ***                                      ***
+   ***     Jesper Borg, Frederic Rousseau   ***
+   ***    Joost Schymkowitz, Luis Serrano   ***
+   ***    Peter Vanhee, Erik Verschueren    ***
+   ***     Lies Baeten, Javier Delgado      ***
+   ***       and Francois Stricher          ***
+   *** and any other of the 9! permutations ***
+   ***   based on an original concept by    ***
+   ***   Raphael Guerois and Luis Serrano   ***
+   ********************************************
+
+Start FoldX AnalyseComplex >>>
+
+1 models read: 6m0j_foldx_Repair_1_1.pdb
+RUNNING COMPLEX ANALYSIS
+./6m0j_foldx_Repair_1_1.pdb
+
+BackHbond       =               -552.02
+SideHbond       =               -290.85
+Energy_VdW      =               -883.46
+Electro         =               -42.99
+Energy_SolvP    =               1157.71
+Energy_SolvH    =               -1167.46
+Energy_vdwclash =               33.37
+energy_torsion  =               27.94
+backbone_vdwclash=              572.31
+Entropy_sidec   =               482.80
+Entropy_mainc   =               1099.63
+water bonds     =               0.00
+helix dipole    =               -4.59
+loop_entropy    =               0.00
+cis_bond        =               1.12
+disulfide       =               0.00
+kn electrostatic=               -0.26
+partial covalent interactions = 0.00
+Energy_Ionisation =             0.00
+Entropy Complex =               0.00
+-----------------------------------------------------------
+Total          = 				  -139.06
+
+Group 0 is composed of chains : A(0)
+Group 1 is composed of chains : E(1)
+Total 
+
+BackHbond       =               -552.02
+SideHbond       =               -290.85
+Energy_VdW      =               -883.46
+Electro         =               -42.99
+Energy_SolvP    =               1157.71
+Energy_SolvH    =               -1167.46
+Energy_vdwclash =               33.37
+energy_torsion  =               27.94
+backbone_vdwclash=              572.31
+Entropy_sidec   =               482.80
+Entropy_mainc   =               1099.63
+water bonds     =               0.00
+helix dipole    =               -4.59
+loop_entropy    =               0.00
+cis_bond        =               1.12
+disulfide       =               0.00
+kn electrostatic=               -0.26
+partial covalent interactions = 0.00
+Energy_Ionisation =             0.00
+Entropy Complex =               0.00
+-----------------------------------------------------------
+Total          = 				  -139.06
+
+interaction between A and E
+
+BackHbond       =               -2.11
+SideHbond       =               -11.66
+Energy_VdW      =               -15.22
+Electro         =               -2.23
+Energy_SolvP    =               21.44
+Energy_SolvH    =               -18.65
+Energy_vdwclash =               12.54
+energy_torsion  =               0.21
+backbone_vdwclash=              1.87
+Entropy_sidec   =               10.15
+Entropy_mainc   =               1.78
+water bonds     =               0.00
+helix dipole    =               -0.04
+loop_entropy    =               0.00
+cis_bond        =               0.00
+disulfide       =               0.00
+kn electrostatic=               -0.26
+partial covalent interactions = 0.00
+Energy_Ionisation =             0.00
+Entropy Complex =               2.38
+-----------------------------------------------------------
+Total          = 				  -4.03
+
+Complex Analysis of ./6m0j_foldx_Repair_1_1.pdb went fine
+
+Your file run OK
+End time of FoldX: Sat Dec 27 20:47:15 2025
+Total time spend: 0.69 seconds.
+==== 6m0j_foldx_Repair_1_2.pdb ====
+   ********************************************
+   ***                                      ***
+   ***             FoldX 5.1 (c)            ***
+   ***                                      ***
+   ***     code by the FoldX Consortium     ***
+   ***                                      ***
+   ***     Jesper Borg, Frederic Rousseau   ***
+   ***    Joost Schymkowitz, Luis Serrano   ***
+   ***    Peter Vanhee, Erik Verschueren    ***
+   ***     Lies Baeten, Javier Delgado      ***
+   ***       and Francois Stricher          ***
+   *** and any other of the 9! permutations ***
+   ***   based on an original concept by    ***
+   ***   Raphael Guerois and Luis Serrano   ***
+   ********************************************
+
+Start FoldX AnalyseComplex >>>
+
+1 models read: 6m0j_foldx_Repair_1_2.pdb
+RUNNING COMPLEX ANALYSIS
+./6m0j_foldx_Repair_1_2.pdb
+
+BackHbond       =               -550.61
+SideHbond       =               -288.71
+Energy_VdW      =               -883.31
+Electro         =               -43.31
+Energy_SolvP    =               1157.01
+Energy_SolvH    =               -1167.50
+Energy_vdwclash =               26.50
+energy_torsion  =               27.78
+backbone_vdwclash=              572.46
+Entropy_sidec   =               482.16
+Entropy_mainc   =               1099.99
+water bonds     =               0.00
+helix dipole    =               -4.57
+loop_entropy    =               0.00
+cis_bond        =               1.12
+disulfide       =               0.00
+kn electrostatic=               -0.24
+partial covalent interactions = 0.00
+Energy_Ionisation =             0.00
+Entropy Complex =               0.00
+-----------------------------------------------------------
+Total          = 				  -143.68
+
+Group 0 is composed of chains : A(0)
+Group 1 is composed of chains : E(1)
+Total 
+
+BackHbond       =               -550.61
+SideHbond       =               -288.71
+Energy_VdW      =               -883.31
+Electro         =               -43.31
+Energy_SolvP    =               1157.01
+Energy_SolvH    =               -1167.50
+Energy_vdwclash =               26.50
+energy_torsion  =               27.78
+backbone_vdwclash=              572.46
+Entropy_sidec   =               482.16
+Entropy_mainc   =               1099.99
+water bonds     =               0.00
+helix dipole    =               -4.57
+loop_entropy    =               0.00
+cis_bond        =               1.12
+disulfide       =               0.00
+kn electrostatic=               -0.24
+partial covalent interactions = 0.00
+Energy_Ionisation =             0.00
+Entropy Complex =               0.00
+-----------------------------------------------------------
+Total          = 				  -143.68
+
+interaction between A and E
+
+BackHbond       =               -1.45
+SideHbond       =               -10.69
+Energy_VdW      =               -15.33
+Electro         =               -2.52
+Energy_SolvP    =               20.61
+Energy_SolvH    =               -18.95
+Energy_vdwclash =               6.32
+energy_torsion  =               0.16
+backbone_vdwclash=              2.00
+Entropy_sidec   =               10.36
+Entropy_mainc   =               2.14
+water bonds     =               0.00
+helix dipole    =               -0.04
+loop_entropy    =               0.00
+cis_bond        =               0.00
+disulfide       =               0.00
+kn electrostatic=               -0.24
+partial covalent interactions = 0.00
+Energy_Ionisation =             0.00
+Entropy Complex =               2.38
+-----------------------------------------------------------
+Total          = 				  -9.64
+
+Complex Analysis of ./6m0j_foldx_Repair_1_2.pdb went fine
+
+Your file run OK
+End time of FoldX: Sat Dec 27 20:47:17 2025
+Total time spend: 0.68 seconds.
+==== 6m0j_foldx_Repair_1_3.pdb ====
+   ********************************************
+   ***                                      ***
+   ***             FoldX 5.1 (c)            ***
+   ***                                      ***
+   ***     code by the FoldX Consortium     ***
+   ***                                      ***
+   ***     Jesper Borg, Frederic Rousseau   ***
+   ***    Joost Schymkowitz, Luis Serrano   ***
+   ***    Peter Vanhee, Erik Verschueren    ***
+   ***     Lies Baeten, Javier Delgado      ***
+   ***       and Francois Stricher          ***
+   *** and any other of the 9! permutations ***
+   ***   based on an original concept by    ***
+   ***   Raphael Guerois and Luis Serrano   ***
+   ********************************************
+
+Start FoldX AnalyseComplex >>>
+
+1 models read: 6m0j_foldx_Repair_1_3.pdb
+RUNNING COMPLEX ANALYSIS
+./6m0j_foldx_Repair_1_3.pdb
+
+BackHbond       =               -551.90
+SideHbond       =               -291.59
+Energy_VdW      =               -883.44
+Electro         =               -42.81
+Energy_SolvP    =               1157.38
+Energy_SolvH    =               -1167.54
+Energy_vdwclash =               33.21
+energy_torsion  =               28.89
+backbone_vdwclash=              572.27
+Entropy_sidec   =               482.70
+Entropy_mainc   =               1100.05
+water bonds     =               0.00
+helix dipole    =               -4.59
+loop_entropy    =               0.00
+cis_bond        =               1.12
+disulfide       =               0.00
+kn electrostatic=               -0.26
+partial covalent interactions = 0.00
+Energy_Ionisation =             0.00
+Entropy Complex =               0.00
+-----------------------------------------------------------
+Total          = 				  -138.78
+
+Group 0 is composed of chains : A(0)
+Group 1 is composed of chains : E(1)
+Total 
+
+BackHbond       =               -551.90
+SideHbond       =               -291.59
+Energy_VdW      =               -883.44
+Electro         =               -42.81
+Energy_SolvP    =               1157.38
+Energy_SolvH    =               -1167.54
+Energy_vdwclash =               33.21
+energy_torsion  =               28.89
+backbone_vdwclash=              572.27
+Entropy_sidec   =               482.70
+Entropy_mainc   =               1100.05
+water bonds     =               0.00
+helix dipole    =               -4.59
+loop_entropy    =               0.00
+cis_bond        =               1.12
+disulfide       =               0.00
+kn electrostatic=               -0.26
+partial covalent interactions = 0.00
+Energy_Ionisation =             0.00
+Entropy Complex =               0.00
+-----------------------------------------------------------
+Total          = 				  -138.78
+
+interaction between A and E
+
+BackHbond       =               -2.52
+SideHbond       =               -13.25
+Energy_VdW      =               -15.10
+Electro         =               -2.08
+Energy_SolvP    =               20.88
+Energy_SolvH    =               -18.55
+Energy_vdwclash =               11.77
+energy_torsion  =               0.64
+backbone_vdwclash=              1.88
+Entropy_sidec   =               10.29
+Entropy_mainc   =               2.26
+water bonds     =               0.00
+helix dipole    =               -0.04
+loop_entropy    =               0.00
+cis_bond        =               0.00
+disulfide       =               0.00
+kn electrostatic=               -0.26
+partial covalent interactions = 0.00
+Energy_Ionisation =             0.00
+Entropy Complex =               2.38
+-----------------------------------------------------------
+Total          = 				  -5.95
+
+Complex Analysis of ./6m0j_foldx_Repair_1_3.pdb went fine
+
+Your file run OK
+End time of FoldX: Sat Dec 27 20:47:19 2025
+Total time spend: 0.70 seconds.
+==== 6m0j_foldx_Repair_1_4.pdb ====
+   ********************************************
+   ***                                      ***
+   ***             FoldX 5.1 (c)            ***
+   ***                                      ***
+   ***     code by the FoldX Consortium     ***
+   ***                                      ***
+   ***     Jesper Borg, Frederic Rousseau   ***
+   ***    Joost Schymkowitz, Luis Serrano   ***
+   ***    Peter Vanhee, Erik Verschueren    ***
+   ***     Lies Baeten, Javier Delgado      ***
+   ***       and Francois Stricher          ***
+   *** and any other of the 9! permutations ***
+   ***   based on an original concept by    ***
+   ***   Raphael Guerois and Luis Serrano   ***
+   ********************************************
+
+Start FoldX AnalyseComplex >>>
+
+1 models read: 6m0j_foldx_Repair_1_4.pdb
+RUNNING COMPLEX ANALYSIS
+./6m0j_foldx_Repair_1_4.pdb
+
+BackHbond       =               -551.73
+SideHbond       =               -291.51
+Energy_VdW      =               -883.48
+Electro         =               -43.15
+Energy_SolvP    =               1157.62
+Energy_SolvH    =               -1167.51
+Energy_vdwclash =               26.88
+energy_torsion  =               27.88
+backbone_vdwclash=              572.35
+Entropy_sidec   =               482.50
+Entropy_mainc   =               1099.65
+water bonds     =               0.00
+helix dipole    =               -4.58
+loop_entropy    =               0.00
+cis_bond        =               1.12
+disulfide       =               0.00
+kn electrostatic=               -0.26
+partial covalent interactions = 0.00
+Energy_Ionisation =             0.00
+Entropy Complex =               0.00
+-----------------------------------------------------------
+Total          = 				  -146.56
+
+Group 0 is composed of chains : A(0)
+Group 1 is composed of chains : E(1)
+Total 
+
+BackHbond       =               -551.73
+SideHbond       =               -291.51
+Energy_VdW      =               -883.48
+Electro         =               -43.15
+Energy_SolvP    =               1157.62
+Energy_SolvH    =               -1167.51
+Energy_vdwclash =               26.88
+energy_torsion  =               27.88
+backbone_vdwclash=              572.35
+Entropy_sidec   =               482.50
+Entropy_mainc   =               1099.65
+water bonds     =               0.00
+helix dipole    =               -4.58
+loop_entropy    =               0.00
+cis_bond        =               1.12
+disulfide       =               0.00
+kn electrostatic=               -0.26
+partial covalent interactions = 0.00
+Energy_Ionisation =             0.00
+Entropy Complex =               0.00
+-----------------------------------------------------------
+Total          = 				  -146.56
+
+interaction between A and E
+
+BackHbond       =               -2.35
+SideHbond       =               -13.13
+Energy_VdW      =               -15.26
+Electro         =               -2.33
+Energy_SolvP    =               21.11
+Energy_SolvH    =               -18.78
+Energy_vdwclash =               6.15
+energy_torsion  =               0.20
+backbone_vdwclash=              1.90
+Entropy_sidec   =               10.03
+Entropy_mainc   =               1.89
+water bonds     =               0.00
+helix dipole    =               -0.04
+loop_entropy    =               0.00
+cis_bond        =               0.00
+disulfide       =               0.00
+kn electrostatic=               -0.26
+partial covalent interactions = 0.00
+Energy_Ionisation =             0.00
+Entropy Complex =               2.38
+-----------------------------------------------------------
+Total          = 				  -12.77
+
+Complex Analysis of ./6m0j_foldx_Repair_1_4.pdb went fine
+
+Your file run OK
+End time of FoldX: Sat Dec 27 20:47:21 2025
+Total time spend: 0.70 seconds.
