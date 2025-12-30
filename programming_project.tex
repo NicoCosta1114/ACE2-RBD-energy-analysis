@@ -1,0 +1,731 @@
+\documentclass[11pt,a4paper]{article}
+
+
+% Packages 
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{setspace}
+
+\onehalfspacing
+
+
+% Title
+
+\title{Energy decomposition analysis of the SARS-CoV-2 ACE2--RBD  interaction}
+\author{Luis Carlos Ospina, Joseph Nosa and Nicolás Costa}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+
+% Abstract
+
+\begin{abstract}
+Protein–protein interactions are important in many biological processes, and small sequence changes can strongly affect the stability of these complexes. In this work, we study the interaction between the receptor binding domain (RBD) of the SARS-CoV-2 Spike protein and the human ACE2 receptor. The protein–protein interface was defined using two methods: a distance-based method and an energy-based method. The interaction energy was divided into electrostatic, van der Waals, and solvation contributions. The importance of individual interface residues was studied using both direct interaction energies and an in silico alanine scanning approach. In addition, known SARS-CoV-2 variants were analyzed and the results were compared with calculations performed using FoldX.
+\end{abstract}
+
+
+% Introduction
+
+\section{Introduction}
+
+Protein--protein interactions are important in many biological processes. Small changes in the structure or in the amino acid sequence of a protein can strongly affect how two proteins bind to each other. For this reason, studying the interaction energy between proteins can help us understand which residues are important for complex stability.
+
+One well-known example is the interaction between the receptor-binding domain (RBD) of the SARS-CoV-2 Spike protein and the human ACE2 receptor. This interaction is a key step in the infection process, as it allows the virus to enter human cells. Because of this, many vaccines and therapeutic strategies aim to block or weaken the RBD--ACE2 binding.
+
+In this work, the protein--protein interface is defined using a distance-based method.
+Then, the interaction energy is divided into electrostatic, van der Waals, and solvation
+contributions. This allows us to analyze how different residues contribute to the overall
+binding energy.
+
+We also compare the distance-based interface with an alternative interface definition based on interaction energy. In addition, the importance of individual interface residues is studied
+using per-residue energy decomposition and an in silico alanine scanning approach. Finally, the effect of selected SARS-CoV-2 RBD variants is analyzed and compared with the results obtained using FoldX.
+
+Overall, this analysis provides a clearer view of the energetic factors that stabilize the
+RBD--ACE2 complex and highlights the residues that play the most important role in binding.
+
+% Materials and Methods
+
+\section{Methodology}
+
+\subsection{Structural data and preparation}
+
+
+The structure 6M0J was downloaded from the Protein Data Bank (X-ray diffraction, 2.45~\AA\ resolution). The structure was preprocessed using \texttt{biobb\_structure\_checking} in order to obtain a clean and consistent input for interface detection and energy calculations. Only chains A (ACE2) and E (RBD) were kept. All heteroatoms were removed, including ions (e.g., Zn$^{2+}$, Cl$^{-}$), glycans/ligands (NAG), and crystallographic water molecules.
+
+Alternative atom locations were handled by selecting the highest-occupancy conformations. The structure checker also fixed amide assignments when unusual contacts were detected and added missing terminal atoms (OXT) when needed. Finally, hydrogen atoms were added automatically, and histidines were assigned using the default protonation selection, producing a final PDB without heteroatoms and with hydrogens and charges suitable for the next steps. All preprocessing steps were executed through custom scripts: structure cleaning and standardization were performed with \texttt{step1\_preprocess\_structure}, chain extraction (A and E) with \texttt{step1\_split\_chains}, and PDB-to-PDBQT conversion with \texttt{pdb\_to\_pdbqt}.
+The resulting PDBQT files were used in subsequent steps for charge assignment and interaction calculations.
+
+\subsection{Definition of the protein--protein interface}
+
+The interface between both proteins was defined using a distance-based criterion. A residue was
+considered part of the interface if at least one of its heavy atoms was within a given cutoff
+distance from any atom of the opposite chain. Several cutoff distances (6.0, 6.5, 7.0 and 8.0~\AA)
+were tested in order to evaluate the robustness of the interface definition. The final cutoff of
+7.0~\AA\ was selected as it provided the best compromise between capturing the majority of the
+interaction energy and avoiding the inclusion of residues not directly involved in binding.
+This choice was further supported by visual inspection of the interface using PyMOL.
+Interface residues were extracted using the script \texttt{step1\_interface\_residues\_6m0j}.
+
+
+\subsection{Interaction energy calculation}
+
+The interaction energy between ACE2 (chain A) and the RBD (chain E) was computed as the difference between the total energy of the bound state (the protein complex) and the unbound state, where both chains are considered isolated in solution. Under this definition, the interaction energy represents the energetic contribution arising from the formation of the protein--protein complex.
+
+
+\begin{equation}
+\Delta G^{A-B} =
+\Delta G_{\text{elect}}^{A-B}
++ \Delta G_{\text{vdw}}^{A-B}
++ \Delta G_{\text{solv}}^{A-B}
+- \Delta G_{\text{solv}}^{A}
+- \Delta G_{\text{solv}}^{B}
+\end{equation}
+
+
+
+The total interaction energy was decomposed into three contributions: electrostatic interactions, van der Waals interactions, and solvation free energy. Electrostatic interaction energies were computed for all atom pairs across chains A and E using Coulomb’s law with a distance-dependent dielectric function (Mehler--Solmajer model). Atomic partial charges were taken from CMIP-prepared PDBQT files. Van der Waals interactions were calculated using a Lennard--Jones potential with parameters derived from AutoDock atom types and combined using standard mixing rules. In both cases, interaction energies were summed over all inter-chain atom pairs.
+
+Solvation free energies were approximated using an ASA-based model. Solvent accessible surface area values were obtained using NACCESS for the protein complex and for each isolated chain. For each atom, the solvation contribution was computed as the product of its ASA and an atom-type-specific solvation parameter. The solvation contribution to the interaction energy was calculated as:
+\begin{equation}
+\Delta G_{\text{solv}}^{A-B} = G_{\text{solv}}(\text{complex}) - G_{\text{solv}}(A) - G_{\text{solv}}(B)
+\end{equation}
+
+Interaction energies were first computed considering all atoms of both chains. The same calculations were then repeated considering only atoms belonging to interface residues, as defined in the previous subsection. This comparison was used to evaluate whether the distance-based interface definition captured most of the interaction energy associated with complex formation.
+All energy terms were computed with a script with all energy reusable functions: \texttt{energy\_utils} and a script which imports this functions and returns the corresponding outputs: \texttt{step2\_compute\_interaction\_energy}. All using CMIP-prepared PDBQT charges and NACCESS ASA outputs.
+
+In addition, interactions across the interface were identified and classified according to their
+chemical nature using geometric and chemical criteria applied to the PDBQT structure. Atom
+pairs within a maximum scan distance of 7.0~\AA\ were considered and classified as hydrogen
+bonds, salt bridges, aromatic stacking interactions, or van der Waals/hydrophobic contacts using
+standard distance thresholds. The detected interactions were summarized both at the atom-pair
+level and at the residue level. This was computed with the \texttt{step2\_detect\_interactions} script.
+
+
+\subsection{Optional energy-based interface analysis}
+
+In addition to the distance-based definition of the protein--protein interface described previously, an optional analysis was performed to explore an alternative interface definition based on interaction energy rather than geometric distance. The objective of this analysis was to evaluate whether energetically relevant residues coincide with the residues identified using a distance cutoff and to assess the robustness of the interface definition.
+
+First, interaction energies were computed on a per-residue basis for all residues in both ACE2 and the RBD. For each residue, the total interaction energy was obtained by summing its electrostatic, van der Waals, and solvation contributions arising from interactions with the opposite chain. This allowed the identification of residues that contribute significantly to the overall interaction energy, independently of their spatial distance from the binding partner. Based on these values, an energy-based interface was defined by selecting residues whose absolute interaction energy exceeded a given threshold.
+
+Different energy thresholds were tested in order to analyze how the size and composition of the energy-based interface change as a function of the cutoff. For each threshold, the resulting energy-based interface was compared with the distance-based interface obtained previously. This comparison was performed using standard metrics such as precision and recall, treating the distance-based interface as a reference. In addition, the fraction of the total interaction energy captured by the energy-based interface was computed to evaluate how well it represents the overall binding energy.
+
+To further characterize the interface, per-residue interaction energies were also recomputed considering only the residues belonging to the distance-based interface. This analysis allowed a clearer identification of stabilizing and destabilizing residues at the interface and facilitated the interpretation of residue-level energetic contributions. The most stabilizing and most destabilizing residues were highlighted to identify potential energetic hotspots.
+
+Finally, several plots were generated to summarize the results of this optional analysis. These include plots showing the distribution of interaction energies across interface residues, comparisons between full-chain and interface-only interaction energies, and visual comparisons between distance-based and energy-based interface definitions. Together, these analyses provide complementary insight into the relationship between geometric proximity and energetic relevance at the RBD--ACE2 interface and support the validity of the distance-based approach used in the main analysis.
+
+This optional analysis was fully automated using a set of custom Python scripts.
+Per-residue interaction energies for the full complex were computed using
+\path{step2_optional_compute_per_residue_full_energies.py},
+while interaction energies restricted to interface residues were obtained with
+\path{step2_optional_per_residue_interface_energy.py}.
+
+Energy-based interfaces for different thresholds were generated and compared to the
+distance-based interface using
+\path{step2_optional_comparison_energy_thresholds.py}.
+The corresponding metrics and visualizations were produced with
+\path{step2_optional_plot_thresholds_and_comparison.py} and
+\path{step2_optional_plots_interface_energies.py}.
+
+\subsubsection*{Assumptions}
+
+Note that this computation was done under some assumptions. Firstly, it was assumed that no conformational changes occur in the protein structures between the bound and unbound states. Also, only non-bonded interactions between atoms belonging to different chains were considered, as no covalent bonds exist between the two proteins. Third, heteroatoms not directly related to the protein--protein interface were assumed to have a negligible effect and were not included in the calculations. Finally, solvation effects were approximated using ASA-based models for all atom types, and entropic contributions were not explicitly considered. These assumptions allow a simplified but consistent estimation of relative interaction energies and residue contributions.
+
+
+\subsection{Per-residue energy decomposition}
+
+To identify the energetic contribution of individual residues at the protein--protein interface, the total interaction energy was further decomposed into per-residue contributions. For each interface residue, the interaction energy was computed by summing all inter-chain interactions involving atoms of that residue and atoms of the opposite chain.
+
+This per-residue decomposition allowed the identification of stabilizing and destabilizing residues at the interface and provided a residue-level view of the interaction energy distribution. The resulting per-residue energies were used as a reference for the alanine scanning analysis described in the following section.
+
+\subsection{Alanine scanning}
+
+Each interface residue was individually mutated to alanine by removing all side-chain atoms
+beyond the $\mathrm{C}_\beta$ atom, while keeping the backbone atoms
+($\mathrm{N}$, $\mathrm{C}_\alpha$, $\mathrm{C}$, $\mathrm{O}$) and the $\mathrm{C}_\beta$.
+Glycine residues were excluded from this analysis, as they do not contain a side chain beyond
+the backbone.
+
+For each mutant structure, the interaction energy between ACE2 (chain A) and the RBD (chain E)
+was recomputed using the same energy model and parameters as for the wild-type complex. The
+interaction free energy was calculated as:
+
+\begin{equation}
+\Delta G^{A-B} =
+\Delta G_{\text{elect}}^{A-B}
++ \Delta G_{\text{vdw}}^{A-B}
++ \Delta G_{\text{solv}}^{A-B}
+- \Delta G_{\text{solv}}^{A}
+- \Delta G_{\text{solv}}^{B}
+\end{equation}
+
+Electrostatic interactions were computed using Coulomb’s law with a distance-dependent
+dielectric function, van der Waals interactions were modeled using a Lennard--Jones potential
+with AutoDock-derived parameters, and solvation free energies were estimated using a
+surface-area-based model. Electrostatic and van der Waals contributions were summed over
+all inter-chain atom pairs, while solvation energies were computed as the difference between
+the solvated complex and the isolated chains.
+
+The wild-type interaction energy ($\Delta G_{\text{WT}}$) was computed once using interface
+atoms. For each alanine mutant, the mutated interaction energy ($\Delta G_{\text{mut}}$) was
+computed using the modified atom list. The effect of each mutation was quantified as:
+
+\begin{equation}
+\Delta\Delta G = \Delta G_{\text{mut}} - \Delta G_{\text{WT}}
+\end{equation}
+
+Positive $\Delta\Delta G$ values indicate destabilizing mutations, identifying residues that
+contribute favorably to binding in the wild-type complex, while negative values indicate
+stabilizing or energetically neutral substitutions. The results were stored in a CSV file and
+visualized using bar plots to highlight the most important energetic hotspot residues at the
+interface.
+
+The Alanine scanning process was done with the \texttt{step3\_ala\_scan\_interface} script.
+
+\subsection{Variant and FoldX analysis}
+
+\subsubsection{Variant analysis}
+
+To evaluate the effect of clinically relevant SARS-CoV-2 mutations on the stability of the
+ACE2--RBD complex, we selected four well-known RBD variants: E484K, L452R, N501Y and
+T478K. 
+
+These mutations involve substitutions that modify charge, size, or hydrogen-bonding
+capability at the receptor-binding interface. E484K replaces a negatively charged glutamate
+with a positively charged lysine, and this alters local electrostatic interactions and contributes
+to immune escape. L452R introduces a charged arginine in place of a hydrophobic leucine, 
+strengthening electrostatic contacts and increasing receptor affinity.
+N501Y replaces asparagine with a larger aromatic tyrosine, enhancing packing interactions
+and hydrogen bonding at a central hotspot of the interface. Finally, T478K introduces a
+positively charged lysine near the binding surface, which may modulate both receptor binding
+and antibody recognition. These substitutions have been selected during viral evolution 
+due to their combined effects on ACE2 binding efficiency and immune evasion.
+
+Each mutation was introduced by replacing the corresponding side chain in the RBD 
+and keeping the backbone fixed. Then, the interaction energy was recomputed using 
+the same protocol applied to the wild-type complex.
+
+\begin{figure}[H]
+\centering
+
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth,trim=10 10 10 10,clip]{results/pymol_images/fig5_mutant_N501Y.png}
+    \caption{N501Y}
+    \label{fig:mut_N501Y}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth,trim=10 10 10 10,clip]{results/pymol_images/fig5_mutant_E484K.png}
+    \caption{E484K}
+    \label{fig:mut_E484K}
+\end{subfigure}
+
+\vspace{0.6em}
+
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth,trim=10 10 10 10,clip]{results/pymol_images/fig5_mutant_L452R.png}
+    \caption{L452R}
+    \label{fig:mut_L452R}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth,trim=10 10 10 10,clip]{results/pymol_images/fig5_mutant_T478K.png}
+    \caption{T478K}
+    \label{fig:mut_T478K}
+\end{subfigure}
+
+\caption{Structural localization of selected RBD mutations on the ACE2--RBD complex. ACE2 (chain A) and the RBD (chain E) are shown in the same orientation across panels, and the mutated residue is highlighted for each variant.}
+\label{fig:mutants}
+\end{figure}
+
+
+\subsubsection{FoldX analysis}
+
+FoldX was used as an independent method to estimate the effect of RBD mutations on the stability of the ACE2--RBD complex. The calculations were performed using FoldX version 5.1, which uses an energy function that includes van der Waals interactions, hydrogen bonds, electrostatics, solvation effects and entropic contributions.
+
+Before running the energy calculations, the wild-type structure was processed using the \texttt{RepairPDB} command to optimize side-chain conformations and remove local steric clashes. Each mutant structure (E484K, L452R, N501Y and T478K) were then generated starting from the repaired wild-type complex. The interaction energy between ACE2 (chain A) and the RBD (chain E) was computed using the \texttt{AnalyseComplex} command.
+
+The objective of using this tool was to compare the effects of the mutations with those obtained from the custom energy decomposition approach.
+
+
+% Results
+
+\section{Results}
+
+\subsection{Interaction energy distribution and interface validation}
+
+The contribution of individual residues to the RBD--ACE2 interaction energy was analyzed by combining per-residue energy decomposition with a comparison between distance-based and energy-based interface definitions.
+
+\subsubsection{Fraction of interaction energy explained by energetic thresholds}
+
+The fraction of the total interaction energy captured by residues exceeding different absolute per-residue energy thresholds is shown in Figure~\ref{fig:threshold_energy_fraction}. Using a low threshold (0.5--0.75~kcal/mol) captures more than 80\% of the total interaction energy. As the threshold increases, the fraction of explained interaction energy decreases progressively, dropping to approximately 60\% at 1.25~kcal/mol and below 40\% at 3~kcal/mol.
+
+This result indicates that the interaction energy is not concentrated exclusively in a small number of residues. Instead, while some residues act as strong energetic hotspots, a substantial fraction of the binding energy is distributed among residues with moderate contributions. Therefore, applying strict energy cutoffs leads to a significant loss of relevant energetic information.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{results/plots/threshold_energy_fraction.png}
+\caption{Fraction of total interaction energy explained as a function of the absolute per-residue interaction energy threshold.}
+\label{fig:threshold_energy_fraction}
+\end{figure}
+
+\subsubsection{Energy-based versus distance-based interface definition}
+
+Energy-based interfaces obtained using different interaction energy thresholds were compared with the distance-based interface defined using a 7~\AA\ cutoff. Precision, recall, and F1-score were computed using the distance-based interface as a reference (Figure~\ref{fig:threshold_precision_recall}).
+
+At low energy thresholds, the energy-based interface shows moderate precision and recall, indicating partial overlap with the distance-based definition. As the threshold increases, precision rises sharply and approaches 1.0, meaning that residues selected by high energy thresholds almost always belong to the distance-based interface. However, recall decreases substantially, showing that many geometrically defined interface residues contribute weakly to the interaction energy and are not selected by strict energy-based criteria.
+
+This analysis highlights a trade-off between precision and recall. Energy-based definitions with high thresholds identify a small number of highly stabilizing residues, whereas distance-based definitions capture a broader and more complete set of interface residues.
+
+
+
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.75\textwidth]{results/plots/threshold_precision_recall.png}
+\caption{Precision, recall, and F1-score comparing energy-based interface definitions to the distance-based interface (7~\AA) for different interaction energy thresholds.}
+\label{fig:threshold_precision_recall}
+\end{figure}
+
+\subsubsection{Per-residue interaction energy at the interface}
+
+The total interaction energy per residue for interface residues is shown in Figure~\ref{fig:total_energy_per_residue}. The distribution is highly asymmetric, with most residues contributing weakly to the interaction energy and a limited number of residues acting as energetic hotspots.
+
+Several residues exhibit strongly stabilizing contributions (negative $\Delta G$), indicating a key role in complex formation. In contrast, a small number of residues contribute unfavorably, suggesting local steric clashes or desolvation penalties. This uneven distribution is characteristic of protein--protein interfaces, where binding affinity is dominated by a subset of residues rather than being evenly distributed across the interface.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.75\textwidth]{results/plots/total_energy_per_residue.png}
+\caption{Total per-residue interaction energy for residues at the RBD--ACE2 interface.}
+\label{fig:total_energy_per_residue}
+\end{figure}
+
+\subsubsection{Comparison of interface definitions}
+
+The overlap between the distance-based interface (7~\AA\ cutoff) and the energy-based interface defined using a 0.5~kcal/mol threshold is illustrated in Figure~\ref{fig:venn_interface_overlap}. A substantial number of residues are shared between both definitions, indicating that many geometrically close residues also contribute significantly to binding energy.
+
+However, each method also identifies unique residues. Some residues are geometrically close but energetically weak, while others contribute energetically despite not being among the closest contacts. This result shows that geometric proximity alone does not fully capture energetic relevance and that energy-based analyses provide complementary insight.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.55\textwidth]{results/plots/venn_interface_overlap.png}
+\caption{Overlap between distance-based (7~\AA) and energy-based (0.5~kcal/mol) interface definitions.}
+\label{fig:venn_interface_overlap}
+\end{figure}
+
+\subsubsection{Energy decomposition by interaction type}
+
+The interaction energy was further decomposed into electrostatic, van der Waals, and solvation contributions (Figure~\ref{fig:energy_decomposition}). Van der Waals interactions constitute the dominant stabilizing contribution for most interface residues, reflecting the importance of packing and shape complementarity at the RBD--ACE2 interface.
+
+Electrostatic interactions contribute significantly for a smaller number of residues, typically involving charged or polar amino acids engaged in salt bridges or hydrogen bonds. Solvation contributions are often unfavorable due to desolvation penalties upon complex formation, but these penalties are compensated by favorable inter-chain interactions.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.7\textwidth]{results/plots/energy_decomposition.png}
+\caption{Decomposition of the total RBD--ACE2 interaction energy into electrostatic, van der Waals, and solvation contributions.}
+\label{fig:energy_decomposition}
+\end{figure}
+
+\subsubsection{Full-complex versus interface-only interaction energy}
+
+A comparison between the interaction energy computed for the full complex and that computed using only interface residues is shown in Figure~\ref{fig:full_vs_interface_energy}. The interface-only calculation captures most of the total interaction energy, although it is slightly less favorable than the full-complex value.
+
+This result confirms that the distance-based interface definition is appropriate and that residues outside the interface contribute only marginally to the overall interaction energy.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.55\textwidth]{results/plots/full_vs_interface_energy.png}
+\caption{Comparison of interaction energy computed for the full complex and using only interface residues.}
+\label{fig:full_vs_interface_energy}
+\end{figure}
+
+
+\subsubsection{Interface contacts by interaction type}
+
+To characterize the nature of the RBD--ACE2 interface, detected inter-chain contacts
+were classified according to their interaction type. The total number of contacts of each
+type is shown in Figure~\ref{fig:WT_interface_contacts_by_type}.
+
+The interface is dominated by van der Waals and hydrophobic contacts, which account for the
+vast majority of detected interactions. This observation is consistent with the strong
+contribution of van der Waals terms observed in the energy decomposition analysis
+(Figure~\ref{fig:energy_decomposition}) and highlights the importance of packing and shape
+complementarity in stabilizing the RBD--ACE2 complex.
+
+In contrast, hydrogen bonds, salt bridges, and aromatic stacking interactions are much less
+frequent. Although these interactions are fewer in number, they often involve charged or
+polar residues and can contribute significantly to specificity and local stabilization of
+the interface. Together, these results indicate that binding is driven primarily by a dense
+network of weak hydrophobic contacts, complemented by a smaller number of directional and
+electrostatic interactions that fine-tune the interaction.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{results/plots/WT_interface_contacts_by_type.png}
+\caption{Number of detected inter-chain contacts at the RBD--ACE2 interface classified by
+interaction type.}
+\label{fig:WT_interface_contacts_by_type}
+\end{figure}
+
+\newpage
+
+\subsubsection{Most stabilizing and destabilizing interface residues}
+
+To summarize the most relevant energetic contributions at the RBD--ACE2 interface, the results
+of the per-residue interaction energy analysis were ranked to identify the residues with the
+largest stabilizing and destabilizing effects.
+
+Figure~\ref{fig:top10_destabilizing} shows the ten most destabilizing residues upon alanine
+mutation, i.e.\ residues with the largest positive $\Delta\Delta G$ values. These mutations
+significantly weaken the interaction, indicating that the corresponding wild-type residues
+play an important role in stabilizing the complex. In particular, residue E:453~Tyr shows a
+markedly larger destabilizing effect compared to the rest, highlighting it as a major energetic
+hotspot at the interface.
+
+Conversely, Figure~\ref{fig:top10_stabilizing} displays the ten most stabilizing residues, which
+exhibit strongly negative interaction energies in the wild-type complex. These residues
+contribute most favorably to binding and dominate the interaction energy landscape of the
+interface. The strongest stabilizing contributions are observed for aromatic and hydrophobic
+residues, such as tyrosine and phenylalanine, consistent with the dominant role of van der
+Waals interactions observed in the energy decomposition analysis.
+
+Together, these ranked plots provide a compact summary of the most relevant interface residues
+in energetic terms and serve as an effective alternative to a tabular representation of the
+strongest interaction contributions requested in Step~2.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.75\textwidth]{results/plots/top10_destabilizing.png}
+\caption{Top ten destabilizing interface residues identified by alanine scanning, ranked by
+$\Delta\Delta G$. Positive values indicate mutations that weaken binding.}
+\label{fig:top10_destabilizing}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.75\textwidth]{results/plots/top10_stabilizing.png}
+\caption{Top ten stabilizing interface residues in the wild-type complex, ranked by their
+contribution to the total interaction energy. Negative values indicate strong stabilizing
+effects.}
+\label{fig:top10_stabilizing}
+\end{figure}
+
+\newpage
+
+\subsection{Energy-based alanine scanning}
+To quantify the energetic importance of individual interface residues, we performed an \emph{in silico}
+alanine scan over the set of residues classified as interfacial in Step~2. For each residue, the side chain
+was replaced by alanine (keeping the backbone fixed) and the change in binding free energy was computed as
+\begin{equation}
+\Delta\Delta G = \Delta G_{\mathrm{mut}} - \Delta G_{\mathrm{WT}}.
+\end{equation}
+A positive $\Delta\Delta G$ indicates that the mutation destabilizes binding (i.e., the wild-type residue is a
+\emph{hotspot} that contributes favourably to complex formation), whereas a negative $\Delta\Delta G$ indicates a
+stabilizing mutation.
+
+Figure~\ref{fig:ala_scan} reports the top 25 residues ranked by $\Delta\Delta G$. The strongest hotspots are located
+predominantly on the RBD side (e.g., E486, Y505, Y489), consistent with their central position in the binding epitope.
+On the ACE2 side, residues such as Y41, Y83 and Y27 also show large effects, reflecting their role as key anchors that
+stabilize the interface through complementary packing and polar contacts. Overall, the alanine scan suggests that a
+relatively small subset of residues dominates the binding energetics, which is consistent with the ``hotspot'' nature
+of many protein--protein interfaces.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth]{results/plots/ala_scan_barplot.png}
+    \caption{Top 25 interface residues ranked by alanine scanning $\Delta\Delta G$. Positive values indicate destabilizing
+    mutations (hotspots).}
+    \label{fig:ala_scan}
+\end{figure}
+
+\subsection{Structural visualization of energetic hotspots and variants}
+To connect the energetic signatures to structural context, we visualized the ACE2--RBD complex and highlighted
+(1) the physical interface, (2) energy-based interface residues, (3) the strongest stabilizing hotspots, and
+(4) clinically relevant RBD mutations.
+
+Figure~\ref{fig:full_complex} shows the overall complex architecture (ACE2 in cyan; RBD in orange), while
+Figure~\ref{fig:interface} highlights the interfacial region. Using the energy-based interface definition from Step~2
+($|\Delta G|>0.5$ kcal/mol), residues with strong energetic contributions cluster tightly at the binding surface
+(Figure~\ref{fig:energy_interface}), providing structural support for the energy-threshold approach.
+
+Among these, the most stabilizing hotspots (Figure~\ref{fig:top_hotspots}) are concentrated in the central contact
+patch and are consistent with the large-magnitude contributions observed in the per-residue energy decomposition and
+alanine scan.
+
+\begin{figure}[H]
+\centering
+
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{results/pymol_images/fig1_full_complex.png}
+    \caption{Overall ACE2--RBD complex.}
+    \label{fig:full_complex}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{results/pymol_images/fig2_interface.png}
+    \caption{ACE2--RBD interface region.}
+    \label{fig:interface}
+\end{subfigure}
+
+\vspace{0.6em}
+
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{results/pymol_images/fig3_interface_energy_based_0.5kcal.png}
+    \caption{Energy-based interface residues ($|\Delta G|>0.5$ kcal/mol).}
+    \label{fig:energy_interface}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.50\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{results/pymol_images/fig4_top3_chain_hotspots_stabilizing.png}
+    \caption{Top stabilizing interface hotspots.}
+    \label{fig:top_hotspots}
+\end{subfigure}
+
+\caption{Structural views of the ACE2--RBD complex highlighting the overall architecture, the binding interface, the energy-based interface residues, and the main stabilizing hotspots.}
+\label{fig:structural_overview}
+\end{figure}
+
+
+\subsection{Variant analysis and FoldX comparison}
+
+\subsubsection{Variant analysis: Effect of RBD mutations on interaction energy}
+
+Table~\ref{tab:energy_decomposition_full_interface} summarizes the interaction energies of the ACE2--RBD complex.
+$\Delta G_{\text{total}}$ corresponds to the interaction energy computed using all atoms of the full
+protein complex, whereas $\Delta G_{\text{interface}}$ represents the interaction energy
+contributed by residues at the binding interface.
+The interface fraction indicates the proportion of the total interaction energy explained by
+interface residues.
+
+
+\begin{table}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lccccccccc}
+\toprule
+\textbf{System} &
+\multicolumn{4}{c}{\textbf{Full interaction energy}} &
+\multicolumn{4}{c}{\textbf{Interface interaction energy}} &
+\textbf{Interface fraction} \\
+
+\cmidrule(lr){2-5} \cmidrule(lr){6-9}
+
+ & $\Delta G_{\text{elec}}$ & $\Delta G_{\text{vdW}}$ & $\Delta G_{\text{solv}}$ & $\Delta G_{\text{total}}$
+ & $\Delta G_{\text{elec}}$ & $\Delta G_{\text{vdW}}$ & $\Delta G_{\text{solv}}$ & $\Delta G_{\text{interface}}$
+ &  \\
+
+\midrule
+WT    
+ & $-3.50$ & $-89.49$ & $-6.40$ & $-99.38$
+ & $+2.50$ & $-82.76$ & $-6.40$ & $-86.65$
+ & $0.87$ \\
+
+E484K 
+ & $-8.59$ & $-87.58$ & $-3.66$ & $-99.83$
+ & $+2.13$ & $-80.81$ & $-3.66$ & $-82.35$
+ & $0.82$ \\
+
+L452R 
+ & $-4.84$ & $-87.87$ & $-2.67$ & $-95.38$
+ & $+3.78$ & $-81.11$ & $-2.67$ & $-80.00$
+ & $0.84$ \\
+
+T478K 
+ & $-4.71$ & $-87.85$ & $-2.67$ & $-95.23$
+ & $+3.47$ & $-81.10$ & $-2.67$ & $-80.30$
+ & $0.84$ \\
+
+N501Y 
+ & $-2.14$ & $-85.44$ & $-3.59$ & $-91.17$
+ & $+3.91$ & $-78.70$ & $-3.59$ & $-78.38$
+ & $0.86$ \\
+
+\bottomrule
+\end{tabular}
+}
+
+\caption{Energy decomposition of the ACE2--RBD interaction for the wild-type complex and selected RBD variants.
+The interaction energy is decomposed into electrostatic, van der Waals and solvation contributions,
+reported both for the full complex (chains A--E) and for the interface region only.
+Total interaction energies correspond to the sum of all contributions.
+The interface fraction indicates the proportion of the total interaction energy explained by
+interface residues.
+All energies are reported in kcal/mol.}
+\label{tab:energy_decomposition_full_interface}
+\end{table}
+
+
+All four mutations modify the interaction energy relative to the wild-type complex, although their effects differ in magnitude. Also, for all variants a large fraction of the total interaction energy is explained by the binding interface, therefore indicating that the mutations primarily affect local interactions rather than inducing global energetic changes.
+
+The E484K mutation leads to the strongest stabilization of the ACE2--RBD interaction in our energy model, being slightly more favorable in total interaction energy terms than the wild-type complex. This effect is mainly driven by changes in electrostatic interactions at the interface, what is consistent with the introduction of a positively charged lysine at position 484.
+
+In contrast, the N501Y mutation shows the largest destabilization among the analyzed variants, with both total and interface interaction energies becoming less favorable compared to the wild-type complex. Despite N501 being located within a known energetic hotspot, the replacement of asparagine by tyrosine alters the local interaction network in a way that is not fully compensated in this energy framework.
+
+The L452R and T478K mutations show intermediate effects, what moderately reduces binding stability.
+
+
+\subsubsection{FoldX comparison}
+
+Table~\ref{tab:foldx_interaction} summarizes the interaction energies computed with FoldX for
+the wild-type ACE2--RBD complex and the selected RBD variants. Here,
+$\Delta G_{\text{int}}$ corresponds to the interaction energy between chains A (ACE2) and E (RBD)
+as computed by the \texttt{AnalyseComplex} command. For each mutant, the reported value
+represents the mean interaction energy across the repaired models generated by FoldX, and
+$\Delta\Delta G$ values are calculated relative to the wild-type complex.
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lccc}
+\toprule
+\textbf{System} & \textbf{$\Delta G_{\text{int}}$ (kcal/mol)} & \textbf{n} & \textbf{$\Delta\Delta G$ vs WT} \\
+\midrule
+WT      & $-15.69$ & 1 & $0.00$ \\
+E484K   & $-16.27$ & 5 & $-0.58$ \\
+L452R   & $-15.83$ & 5 & $-0.14$ \\
+T478K   & $-15.69$ & 5 & $0.00$ \\
+N501Y   & $-9.03$  & 5 & $+6.66$ \\
+
+\bottomrule
+\end{tabular}
+
+\caption{FoldX interaction energies ($\Delta G_{\text{int}}$) between ACE2 (chain A) and RBD (chain E) computed using the \texttt{AnalyseComplex} command.
+For each mutant, the reported value corresponds to the mean interaction energy across the repaired models generated by FoldX (n), with $\Delta\Delta G$ calculated relative to the wild-type complex.
+All energies are in kcal/mol.}
+\label{tab:foldx_interaction}
+\end{table}
+
+
+Overall, the FoldX interaction energies show clear differences across the different variants.
+
+The E484K mutation leads to a slightly more favorable interaction energy than the wild-type complex, resulting in a small negative $\Delta\Delta G$ value. This suggests a small stabilization of the ACE2--RBD interaction due to the introduction of a positively charged lysine at the interface.
+
+The L452R and T478K mutations show very limited effects on binding affinity, with interaction energies close to that of the wild-type complex. These results indicate that, within the FoldX energy framework, both mutations have a neutral impact on overall complex stability.
+
+In contrast, the N501Y mutation produces a destabilization of the ACE2--RBD interaction, with a less favorable interaction energy and a positive $\Delta\Delta G$. These results show that, despite being located in a key interaction region, the N501Y substitution alters local contacts in a way that is not fully compensated  in the FoldX energy model.
+
+Taken together, FoldX reproduces the main trends observed in the custom energy analysis, with E484K showing stabilization, N501Y causing destabilization, and L452R and T478K having moderate effects.
+
+% Discussion
+
+\section{Discussion}
+
+In this project, we used a simple energy decomposition approach to study the ACE2--RBD
+interaction. We also tested different ways to define the interface and evaluated the effect of
+relevant RBD mutations, comparing our results with FoldX.
+
+First, the distance-based interface definition with a 7.0~\AA\ cutoff captures most of the total
+interaction energy. For WT and all variants, the interface fraction stays high (0.82--0.87),
+meaning that most of the binding energy comes from residues located at the contact surface,
+and that residues outside the interface have a much smaller energetic contribution. 
+
+The energy-based interface analysis shows a clear trade-off. Low energy thresholds include many
+residues and recover a large fraction of the binding energy, while high thresholds select only a few
+strong residues. With high thresholds, precision is high (most selected residues are truly at the
+geometric interface), but recall is low (many geometric interface residues are missed). This indicates
+that binding is dominated by a few strong hotspots, but a large number of residues contribute moderately.
+
+Contact classification shows that most detected contacts are van der Waals/hydrophobic, which matches
+the strong vdW contribution observed in the energy decomposition. Hydrogen bonds and salt bridges are
+less frequent, but they can still be important for specificity and for local stabilization in key regions.
+
+For the variants, changes in binding energy are mainly explained by local effects at the interface.
+E484K produces the strongest stabilization in our custom energy model, mainly due to electrostatic
+changes at the interface. In contrast, N501Y shows the strongest destabilization in our framework,
+suggesting that the mutation disrupts the local interaction network and the effect is not compensated
+by other terms. L452R and T478K show smaller and more intermediate effects.
+
+FoldX reproduces the main qualitative trends: E484K is slightly stabilizing and N501Y is destabilizing,
+while L452R and T478K are close to neutral. Differences in absolute values are expected because FoldX
+uses a different energy function and includes additional terms (e.g., empirical corrections and entropy).
+Also, our method assumes rigid structures and uses approximate solvation, so results should be interpreted
+as relative trends within a simplified model rather than exact binding free energies.
+
+Overall, our results support a consistent picture of ACE2--RBD binding, where most of the interaction energy
+comes from the interface, with a few strong hotspots and many weaker vdW contacts that collectively stabilize
+the complex.
+
+
+% Conclusions
+
+\section{Conclusions}
+
+In this work, we applied a simple and interpretable energy decomposition framework to analyze
+the ACE2--RBD interaction. Despite the approximations involved, the approach allows a clear
+identification of the main energetic determinants of binding and provides consistent results
+across different analyses.
+
+The results show that the ACE2--RBD interaction is largely driven by residues located at the
+binding interface, with a limited number of residues acting as energetic hotspots and a broader
+set of residues contributing through weaker interactions. In particular, residues such as
+F486, Y505 and Y489 on the RBD, and Y41, Y83 and Y27 on ACE2, are key contributors to complex
+stability.
+
+The analysis of SARS-CoV-2 variants indicates that mutations mainly affect binding through
+local changes at the interface, and FoldX supports the observed trends. While the absolute 
+interaction energies should not be interpreted as exact binding free energies, the model 
+is well suited for relative comparisons between residues and variants.
+
+Overall, this study shows that simplified energy-based analyses can capture the essential
+features of protein--protein interactions and provide useful insight into the energetic
+organization of the ACE2--RBD complex.
+
+
+% Contributions
+
+\section*{Author Contributions}
+
+Luis Carlos Ospina performed the structural preparation and interface definition (Step~1), 
+implemented the optional energy-based interface analysis in Step~2, and contributed to the 
+overall structure and organization of the report. 
+
+Joseph Nosa carried out the alanine scanning analysis (Step~3) and the structural visualization 
+of interface residues and interactions using PyMOL (Step~4). 
+
+Nicolás Costa implemented the interaction energy calculations and interface validation 
+(Step~2), and performed the variant analysis and FoldX calculations (Steps~5 and FoldX).
+
+All authors discussed the results and approved the final version of the manuscript.
+
+
+% References
+
+\begin{thebibliography}{9}
+
+\bibitem{pdb6m0j}
+Lan, J. et al. Structure of the SARS-CoV-2 spike receptor-binding domain bound to the ACE2
+receptor. \emph{Nature}, 2020.
+
+\bibitem{mehler}
+Mehler, E. L., Solmajer, T. Electrostatic effects in proteins.
+\emph{Protein Engineering}, 1991.
+
+\bibitem{foldx}
+Schymkowitz, J. et al. The FoldX web server.
+\emph{Nucleic Acids Research}, 2005.
+
+\bibitem{naccess}
+Hubbard, S. J., Thornton, J. M.
+NACCESS, Computer Program.
+Department of Biochemistry and Molecular Biology, University College London, 1993.
+
+\end{thebibliography}
+
+\end{document}
+
